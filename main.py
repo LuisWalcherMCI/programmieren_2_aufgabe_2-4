@@ -2,12 +2,16 @@ import streamlit as st
 import pandas as pd
 from read_data import get_data_from_json, get_person_name,find_person_by_name
 from PIL import Image
+from read_pandas import make_plot, read_csv,set_zones
+import plotly.express as px
+from create_plot import create_fig
+
 
 def callback_function():
     print(f"The User has changed to {st.session_state.current_user}")
 
 if __name__ == "__main__":
-    tab1, tab2 = st.tabs(['Userauswahl','EKG-Daten'])
+    tab1, tab2 = st.tabs(['Userselection','Activity-Analysis'])
     with tab1:
         col1, col2 = st.columns(2)
         person = get_data_from_json("data/person_db.json")
@@ -32,13 +36,21 @@ if __name__ == "__main__":
             image = Image.open(st.session_state.picture_path)
             st.image(image,caption=st.session_state.current_user)
     with tab2:
-        st.header('EKG-Daten')
-        df_activity = pd.read_csv('data/activities/activity.csv', sep=';')
-        
-        print(df_activity)
+        colnames = ["Duration","HeartRate","PowerOriginal"]
+        df = read_csv("data/activities/activity.csv",colnames)
+        MaxHR= st.number_input("Maximum Heartrate:",value=df["HR"].max(),step=10, min_value = df["HR"].max())
+        df = set_zones(df,MaxHR)
+        fig = create_fig(df)
+        st.plotly_chart(fig)
+        fig2 = px.line(
+            df.head(2000),
+            x=df.index,
+            y="Power",
+            title="PowerOriginal Verlauf",
+        ) 
+        st.plotly_chart(fig2)
 
 
-    
 
 
 
