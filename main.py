@@ -48,6 +48,8 @@ if __name__ == "__main__":
             y="Power",
             title="PowerOriginal Verlauf",
         ) 
+        fig2.update_xaxes(title_text="Zeit in Sekunden")
+
         st.plotly_chart(fig2)
 
 

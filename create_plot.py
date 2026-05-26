@@ -49,7 +49,7 @@ def create_fig(Zone):
 
     fig.update_layout(
         title="Heart Rate nach Zonen",
-        xaxis_title="Zeit / Index",
+        xaxis_title="Zeit in Sekunden",
         yaxis_title="HR"
     )
 
