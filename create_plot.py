@@ -1,9 +1,6 @@
-import plotly.express as px
-
+import plotly.graph_objects as go
 
 def create_fig(Zone):
-
-    import plotly.graph_objects as go
 
     fig = go.Figure()
 
