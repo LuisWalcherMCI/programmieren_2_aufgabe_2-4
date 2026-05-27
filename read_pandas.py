@@ -38,6 +38,7 @@ def set_zones(df,MaxHR):
             z5.append(True)
         else:
             z5.append(False)
+    
     df["Z1"] = z1
     df["Z2"] = z2
     df["Z3"] = z3

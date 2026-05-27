@@ -42,15 +42,45 @@ if __name__ == "__main__":
         df = set_zones(df,MaxHR)
         fig = create_fig(df)
         st.plotly_chart(fig)
-        fig2 = px.line(
-            df.head(2000),
-            x=df.index,
-            y="Power",
-            title="PowerOriginal Verlauf",
-        ) 
-        fig2.update_xaxes(title_text="Zeit in Sekunden ")
+        Power_stats = pd.DataFrame(
+        {
+            "Value": [
+                f"{df['Power'].mean().round(2)} mV",
+                f"{df['Power'].max()} mV",
 
-        st.plotly_chart(fig2)
+                f"{df['Z1'].sum()} s",
+                f"{df['Z1'].mean().round(2)} mV",
+
+                f"{df['Z2'].sum()} s",
+                f"{df['Z2'].mean().round(2)} mV",
+
+                f"{df['Z3'].sum()} s",
+                f"{df['Z3'].mean().round(2)} mV",
+
+                f"{df['Z4'].sum()} s",
+                f"{df['Z4'].mean().round(2)} mV",
+
+                f"{df['Z5'].sum()} s",
+                f"{df['Z5'].mean().round(2)} mV",
+            ]
+        },
+        index=[
+            "Average Power",
+            "Max Power",
+            "Z1-Average-Power",
+            "Z1-Time",
+            "Z2-Average-Power",
+            "Z2-Time",
+            "Z3-Average-Power",
+            "Z3-Time",
+            "Z4-Average-Power",
+            "Z4-Time",
+            "Z5-Average-Power",
+            "Z5-Time",
+        ],
+    )
+
+    st.table(Power_stats)
 
 
 
